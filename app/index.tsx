@@ -1,5 +1,6 @@
 import { Button, Text, View } from "react-native";
 import { useState } from "react";
+import { useRouter } from "expo-router"; // Importieren Sie den Router
 import {
   TextInput,
   TouchableOpacity,
@@ -13,6 +14,7 @@ interface Task {
 }
 
 export default function Index() {
+  const router = useRouter(); // Initialisieren Sie den Router
   const [task, setTask] = useState<string>(""); //speichert die aktuelle Eingabe
   const [tasks, setTasks] = useState<Task[]>([]); //speichert die aktuelle Liste
 
@@ -53,7 +55,13 @@ export default function Index() {
             </TouchableOpacity>
           </View>
         )}
+        ListEmptyComponent={() => (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Text style={{ margin: 10 }}>Keine Aufgaben vorhanden</Text>
+          </View>
+        )}
       />
+      <Button onPress={() => router.navigate("/counter")} title="Counter" />
     </View>
   );
 }

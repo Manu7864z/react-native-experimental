@@ -13,7 +13,7 @@ interface Task {
 }
 
 export default function Index() {
-  const [task, setTask] = useState(""); //speichert die aktuelle Eingabe
+  const [task, setTask] = useState<string>(""); //speichert die aktuelle Eingabe
   const [tasks, setTasks] = useState<Task[]>([]); //speichert die aktuelle Liste
 
   const addTask = () => {

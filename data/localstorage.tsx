@@ -1,12 +1,23 @@
-import { View, Text } from "react-native";
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Deck } from "../types/deck";
 
-const localstorage = () => {
-  return (
-    <View>
-      <Text>localstorage</Text>
-    </View>
-  );
+const STORAGE_KEY = "@MiniCoachDecks";
+
+export const saveDecks = async (decks: Deck[]): Promise<void> => {
+  try {
+    const jsonValue = JSON.stringify(decks);
+    await AsyncStorage.setItem(STORAGE_KEY, jsonValue);
+  } catch (e) {
+    console.error("Fehler beim Speichern:", e);
+  }
 };
 
-export default localstorage;
+export const loadDecks = async (): Promise<Deck[]> => {
+  try {
+    const value = await AsyncStorage.getItem(STORAGE_KEY);
+    return value != null ? JSON.parse(value) : [];
+  } catch (e) {
+    console.error("Fehler beim Laden:", e);
+    return [];
+  }
+};
